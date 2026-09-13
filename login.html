@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="NEXUS Gaming: proyecto académico de tienda de componentes, periféricos y consolas.">
+<title>Mi cuenta | NEXUS Gaming</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css?v=2">
+<script src="js/app.js?v=2" defer>
+</script>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<div class="announcement">TU PRÓXIMO NIVEL EMPIEZA AQUÍ <span>Proyecto académico · Compras de demostración</span>
+</div>
+<header class="site-header">
+<a class="brand" href="index.html">
+<span class="brand-icon">N</span>NEXUS<span class="brand-small">GAMING</span>
+</a>
+<nav aria-label="Navegación principal">
+<a href="index.html">Inicio</a>
+<a href="productos.html">Catálogo</a>
+<a href="contacto.html">Contacto</a>
+<a href="admin.html" id="admin-link" hidden>Administrar</a>
+</nav>
+<div class="account">
+<a href="login.html" id="account-link">Mi cuenta</a>
+<button id="logout" class="text-button" hidden>Salir</button>
+<a class="cart-link" href="carrito.html">Carrito <span id="cart-count">0</span>
+</a>
+</div>
+</header>
+<main id="contenido">
+<section class="form-layout">
+<div>
+<p class="eyebrow">BIENVENIDO A NEXUS</p>
+<h1>Tu próxima<br>partida empieza<br>
+<em>aquí.</em>
+</h1>
+<p class="muted">Ingresa a tu cuenta de demostración.</p>
+<article class="demo-card">
+<h2>Cuentas de prueba</h2>
+<p>Administrador: <code>admin / Admin123</code>
+</p>
+<p>Cliente: <code>jperez / User123</code>
+</p>
+<p class="muted">Acceso simulado para esta entrega académica. No ingreses contraseñas personales.</p>
+</article>
+</div>
+<form id="login-form" novalidate>
+<h2>Iniciar sesión</h2>
+<div class="field">
+<label for="username">Usuario</label>
+<input id="username" name="username" type="text" required autocomplete="username" maxlength="30" aria-describedby="username-error">
+<span class="error" id="username-error" aria-live="polite">
+</span>
+</div>
+<div class="field">
+<label for="password">Contraseña</label>
+<input id="password" name="password" type="password" required autocomplete="current-password" maxlength="64" aria-describedby="password-error">
+<span class="error" id="password-error" aria-live="polite">
+</span>
+</div>
+<label class="check">
+<input type="checkbox" id="show-password"> Mostrar contraseña</label>
+<p id="login-status" role="alert">
+</p>
+<button class="button" type="submit">Ingresar ↗</button>
+</form>
+</section>
+</main>
+<footer>
+<div>
+<a class="brand" href="index.html">NEXUS <span class="brand-small">GAMING</span>
+</a>
+<p>Componentes para tu próxima partida.</p>
+</div>
+<div>
+<strong>Explora</strong>
+<a href="productos.html">Todos los productos</a>
+<a href="contacto.html">Hablemos de tu setup</a>
+</div>
+<div>
+<strong>Sobre este proyecto</strong>
+<p>Tienda académica de demostración.<br>Precios y stock ficticios en pesos chilenos.<br>No procesa pagos ni envía pedidos.</p>
+</div>
+<p class="copyright">© 2026 NEXUS Gaming · HTML5 / CSS3 / JavaScript</p>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite">
+</div>
+</body>
+</html>

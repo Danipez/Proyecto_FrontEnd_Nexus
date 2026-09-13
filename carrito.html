@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="NEXUS Gaming: proyecto académico de tienda de componentes, periféricos y consolas.">
+<title>Carrito | NEXUS Gaming</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css?v=2">
+<script src="js/app.js?v=2" defer>
+</script>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<div class="announcement">TU PRÓXIMO NIVEL EMPIEZA AQUÍ <span>Proyecto académico · Compras de demostración</span>
+</div>
+<header class="site-header">
+<a class="brand" href="index.html">
+<span class="brand-icon">N</span>NEXUS<span class="brand-small">GAMING</span>
+</a>
+<nav aria-label="Navegación principal">
+<a href="index.html">Inicio</a>
+<a href="productos.html">Catálogo</a>
+<a href="contacto.html">Contacto</a>
+<a href="admin.html" id="admin-link" hidden>Administrar</a>
+</nav>
+<div class="account">
+<a href="login.html" id="account-link">Mi cuenta</a>
+<button id="logout" class="text-button" hidden>Salir</button>
+<a class="cart-link" href="carrito.html">Carrito <span id="cart-count">0</span>
+</a>
+</div>
+</header>
+<main id="contenido">
+<section>
+<p class="eyebrow">UN PASO MÁS CERCA</p>
+<h1>Tu próximo setup<span class="accent">.</span>
+</h1>
+<div class="cart-layout">
+<div id="cart-items">
+</div>
+<aside class="summary">
+<h2>Resumen</h2>
+<div class="summary-line">
+<span>Productos</span>
+<span id="summary-count">0</span>
+</div>
+<div class="summary-line total">
+<span>Total</span>
+<strong id="total">$0</strong>
+</div>
+<p>Precios de demostración en CLP. No se realizan cobros ni despachos.</p>
+<button id="checkout" class="button">Confirmar compra demo ↗</button>
+<a href="productos.html">Seguir explorando</a>
+<p id="checkout-status" role="status">
+</p>
+</aside>
+</div>
+</section>
+</main>
+<footer>
+<div>
+<a class="brand" href="index.html">NEXUS <span class="brand-small">GAMING</span>
+</a>
+<p>Componentes para tu próxima partida.</p>
+</div>
+<div>
+<strong>Explora</strong>
+<a href="productos.html">Todos los productos</a>
+<a href="contacto.html">Hablemos de tu setup</a>
+</div>
+<div>
+<strong>Sobre este proyecto</strong>
+<p>Tienda académica de demostración.<br>Precios y stock ficticios en pesos chilenos.<br>No procesa pagos ni envía pedidos.</p>
+</div>
+<p class="copyright">© 2026 NEXUS Gaming · HTML5 / CSS3 / JavaScript</p>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite">
+</div>
+</body>
+</html>

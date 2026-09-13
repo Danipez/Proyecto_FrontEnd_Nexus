@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="NEXUS Gaming: proyecto académico de tienda de componentes, periféricos y consolas.">
+<title>Administración | NEXUS Gaming</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css?v=2">
+<script src="js/app.js?v=2" defer>
+</script>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<div class="announcement">TU PRÓXIMO NIVEL EMPIEZA AQUÍ <span>Proyecto académico · Compras de demostración</span>
+</div>
+<header class="site-header">
+<a class="brand" href="index.html">
+<span class="brand-icon">N</span>NEXUS<span class="brand-small">GAMING</span>
+</a>
+<nav aria-label="Navegación principal">
+<a href="index.html">Inicio</a>
+<a href="productos.html">Catálogo</a>
+<a href="contacto.html">Contacto</a>
+<a href="admin.html" id="admin-link" hidden>Administrar</a>
+</nav>
+<div class="account">
+<a href="login.html" id="account-link">Mi cuenta</a>
+<button id="logout" class="text-button" hidden>Salir</button>
+<a class="cart-link" href="carrito.html">Carrito <span id="cart-count">0</span>
+</a>
+</div>
+</header>
+<main id="contenido">
+<section>
+<p class="eyebrow">GESTIÓN DEL CATÁLOGO</p>
+<h1>Inventario<span class="accent">.</span>
+</h1>
+<p id="admin-notice">Verificando sesión…</p>
+<div id="admin-panel" hidden>
+<div class="section-head">
+<p class="muted">Crea, edita y elimina productos de esta demostración local.</p>
+<button id="new-product" class="button">+ Nuevo producto</button>
+</div>
+<form id="product-form" novalidate hidden>
+<h2 id="product-form-title">Nuevo producto</h2>
+<input type="hidden" id="product-id">
+<div class="form-grid">
+<div class="field">
+<label for="code">Código</label>
+<input id="code" name="code" type="text" required maxlength="20" placeholder="GPU-001" aria-describedby="code-error">
+<span class="error" id="code-error" aria-live="polite">
+</span>
+</div>
+<div class="field">
+<label for="product-name">Nombre</label>
+<input id="product-name" name="product-name" type="text" required minlength="3" maxlength="80" aria-describedby="product-name-error">
+<span class="error" id="product-name-error" aria-live="polite">
+</span>
+</div>
+<div class="field">
+<label for="product-category">Categoría</label>
+<select id="product-category">
+<option>Componentes</option>
+<option>Periféricos</option>
+<option>Consolas</option>
+</select>
+</div>
+<div class="field">
+<label for="price">Precio (CLP)</label>
+<input id="price" name="price" type="number" required min="1" max="99999999" step="1" aria-describedby="price-error">
+<span class="error" id="price-error" aria-live="polite">
+</span>
+</div>
+<div class="field">
+<label for="stock">Stock</label>
+<input id="stock" name="stock" type="number" required min="0" max="9999" step="1" aria-describedby="stock-error">
+<span class="error" id="stock-error" aria-live="polite">
+</span>
+</div>
+<label class="check">
+<input id="active" type="checkbox" checked> Visible en el catálogo</label>
+</div>
+<div class="actions">
+<button class="button" type="submit">Guardar producto</button>
+<button id="cancel-product" class="secondary" type="button">Cancelar</button>
+</div>
+</form>
+<div class="table-wrap">
+<table>
+<caption class="sr-only">Productos del inventario</caption>
+<thead>
+<tr>
+<th>Código / Producto</th>
+<th>Categoría</th>
+<th>Precio</th>
+<th>Stock</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody id="inventory">
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div>
+<a class="brand" href="index.html">NEXUS <span class="brand-small">GAMING</span>
+</a>
+<p>Componentes para tu próxima partida.</p>
+</div>
+<div>
+<strong>Explora</strong>
+<a href="productos.html">Todos los productos</a>
+<a href="contacto.html">Hablemos de tu setup</a>
+</div>
+<div>
+<strong>Sobre este proyecto</strong>
+<p>Tienda académica de demostración.<br>Precios y stock ficticios en pesos chilenos.<br>No procesa pagos ni envía pedidos.</p>
+</div>
+<p class="copyright">© 2026 NEXUS Gaming · HTML5 / CSS3 / JavaScript</p>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite">
+</div>
+</body>
+</html>

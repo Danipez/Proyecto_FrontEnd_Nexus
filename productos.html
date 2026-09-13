@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="NEXUS Gaming: proyecto académico de tienda de componentes, periféricos y consolas.">
+<title>Catálogo | NEXUS Gaming</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css?v=2">
+<script src="js/app.js?v=2" defer>
+</script>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<div class="announcement">TU PRÓXIMO NIVEL EMPIEZA AQUÍ <span>Proyecto académico · Compras de demostración</span>
+</div>
+<header class="site-header">
+<a class="brand" href="index.html">
+<span class="brand-icon">N</span>NEXUS<span class="brand-small">GAMING</span>
+</a>
+<nav aria-label="Navegación principal">
+<a href="index.html">Inicio</a>
+<a href="productos.html">Catálogo</a>
+<a href="contacto.html">Contacto</a>
+<a href="admin.html" id="admin-link" hidden>Administrar</a>
+</nav>
+<div class="account">
+<a href="login.html" id="account-link">Mi cuenta</a>
+<button id="logout" class="text-button" hidden>Salir</button>
+<a class="cart-link" href="carrito.html">Carrito <span id="cart-count">0</span>
+</a>
+</div>
+</header>
+<main id="contenido">
+<section>
+<p class="eyebrow">ENCUENTRA TU UPGRADE</p>
+<h1>Catálogo gaming<span class="accent">.</span>
+</h1>
+<p class="muted">Componentes, periféricos y consolas en un solo lugar.</p>
+<div class="filters">
+<div>
+<label for="search">Buscar producto</label>
+<input id="search" type="search" placeholder="Nombre, código o categoría…" maxlength="80">
+</div>
+<div>
+<label for="category">Categoría</label>
+<select id="category">
+<option value="">Todas las categorías</option>
+<option>Componentes</option>
+<option>Periféricos</option>
+<option>Consolas</option>
+</select>
+</div>
+<div>
+<label for="sort">Ordenar por</label>
+<select id="sort">
+<option value="default">Destacados</option>
+<option value="asc">Menor precio</option>
+<option value="desc">Mayor precio</option>
+</select>
+</div>
+<button id="clear-filters" class="secondary">Limpiar</button>
+</div>
+<p id="result-count" role="status" class="muted">
+</p>
+<div id="catalog" class="product-grid">
+</div>
+</section>
+</main>
+<footer>
+<div>
+<a class="brand" href="index.html">NEXUS <span class="brand-small">GAMING</span>
+</a>
+<p>Componentes para tu próxima partida.</p>
+</div>
+<div>
+<strong>Explora</strong>
+<a href="productos.html">Todos los productos</a>
+<a href="contacto.html">Hablemos de tu setup</a>
+</div>
+<div>
+<strong>Sobre este proyecto</strong>
+<p>Tienda académica de demostración.<br>Precios y stock ficticios en pesos chilenos.<br>No procesa pagos ni envía pedidos.</p>
+</div>
+<p class="copyright">© 2026 NEXUS Gaming · HTML5 / CSS3 / JavaScript</p>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite">
+</div>
+</body>
+</html>

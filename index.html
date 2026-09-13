@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="NEXUS Gaming: proyecto académico de tienda de componentes, periféricos y consolas.">
+<title>Sube de nivel | NEXUS Gaming</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css?v=4">
+<script src="js/app.js?v=4" defer>
+</script>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<div class="announcement">TU PRÓXIMO NIVEL EMPIEZA AQUÍ <span>Proyecto académico · Compras de demostración</span>
+</div>
+<header class="site-header">
+<a class="brand" href="index.html">
+<span class="brand-icon">N</span>NEXUS<span class="brand-small">GAMING</span>
+</a>
+<nav aria-label="Navegación principal">
+<a href="index.html">Inicio</a>
+<a href="productos.html">Catálogo</a>
+<a href="contacto.html">Contacto</a>
+<a href="admin.html" id="admin-link" hidden>Administrar</a>
+</nav>
+<div class="account">
+<a href="login.html" id="account-link">Mi cuenta</a>
+<button id="logout" class="text-button" hidden>Salir</button>
+<a class="cart-link" href="carrito.html">Carrito <span id="cart-count">0</span>
+</a>
+</div>
+</header>
+<main id="contenido">
+<section class="hero photo-banner" aria-label="Arma tu setup gaming">
+<div class="hero-copy">
+<p class="eyebrow">HARDWARE DE ALTO RENDIMIENTO</p>
+<h1>Tu setup.<br>Tu mundo.<br>
+<em>Tu siguiente nivel.</em>
+</h1>
+<p>Arma el PC que imaginas. Encuentra componentes, periféricos y consolas para jugar a tu manera.</p>
+<div class="hero-actions"><a class="button" href="productos.html">Explorar catálogo <span>↗</span></a>
+<a class="video-button" href="#guia-video"><span aria-hidden="true">▶</span> Ver guía en video</a></div>
+<div class="hero-tags">
+<span>PC GAMING</span>
+<span>CONSOLAS</span>
+<span>PERIFÉRICOS</span>
+</div>
+</div>
+<div class="hero-art">
+<img src="assets/photos/setup.jpg" alt="Setup gaming real con computador, monitor y periféricos iluminados en tonos violeta y rosa" width="1800" height="1198" fetchpriority="high">
+<a class="photo-credit" href="https://unsplash.com/photos/a-computer-desk-with-a-monitor-keyboard-and-mouse-JomkRNkzKhE" target="_blank" rel="noopener noreferrer">Foto: ELLA DON / Unsplash ↗</a>
+</div>
+</section>
+<section class="category-section">
+<div class="section-head">
+<div>
+<p class="eyebrow">ELIGE TU CAMINO</p>
+<h2>Todo para tu próxima partida</h2>
+</div>
+<a href="productos.html">Ver todo ↗</a>
+</div>
+<div class="categories">
+<a href="productos.html?categoria=Componentes">
+<span>01 / HARDWARE</span>
+<h3>Componentes</h3>
+<p>El corazón de tu equipo ↗</p>
+</a>
+<a href="productos.html?categoria=Periféricos">
+<span>02 / CONTROL</span>
+<h3>Periféricos</h3>
+<p>Cada movimiento cuenta ↗</p>
+</a>
+<a href="productos.html?categoria=Consolas">
+<span>03 / PLAY</span>
+<h3>Consolas</h3>
+<p>Conecta y empieza a jugar ↗</p>
+</a>
+</div>
+</section>
+<section>
+<div class="section-head">
+<div>
+<p class="eyebrow">SELECCIÓN NEXUS</p>
+<h2>Equipa tu siguiente nivel</h2>
+</div>
+<a href="productos.html">Explorar productos ↗</a>
+</div>
+<div id="featured" class="product-grid">
+</div>
+</section>
+<section class="video-section" id="guia-video">
+<div>
+<p class="eyebrow">ANTES DE ARMAR TU PC</p>
+<h2>Conoce lo que hay<br>detrás del rendimiento.</h2>
+<p>Una presentación breve de los componentes que dan vida a tu setup.</p>
+<p class="muted" id="video-description">28 segundos · Texto en español · Sin audio. Presiona reproducir; funciona también sin internet.</p>
+<a href="https://www.youtube.com/watch?v=BL4DCEp7blY" target="_blank" rel="noopener noreferrer">Guía completa de montaje en YouTube ↗</a>
+</div>
+<div class="local-video">
+<video id="component-video" controls playsinline preload="metadata" poster="assets/photos/setup.jpg" aria-label="Presentación de componentes NEXUS Gaming" aria-describedby="video-description">
+<source src="assets/video/nexus-componentes.mp4" type="video/mp4">
+Tu navegador no admite video HTML5. <a href="assets/video/nexus-componentes.mp4">Abrir video MP4</a>.
+</video>
+<div class="video-actions"><button id="video-play" class="button" type="button" aria-controls="component-video">▶ Reproducir video</button><span id="video-status" role="status">Listo para reproducir · 28 segundos</span></div>
+<p id="video-error" role="status" hidden>No se pudo cargar el video. <a href="assets/video/nexus-componentes.mp4">Abrir el archivo MP4</a>.</p>
+</div>
+</section>
+</main>
+<footer>
+<div>
+<a class="brand" href="index.html">NEXUS <span class="brand-small">GAMING</span>
+</a>
+<p>Componentes para tu próxima partida.</p>
+</div>
+<div>
+<strong>Explora</strong>
+<a href="productos.html">Todos los productos</a>
+<a href="contacto.html">Hablemos de tu setup</a>
+</div>
+<div>
+<strong>Sobre este proyecto</strong>
+<p>Tienda académica de demostración.<br>Precios y stock ficticios en pesos chilenos.<br>No procesa pagos ni envía pedidos.</p>
+</div>
+<p class="copyright">© 2026 NEXUS Gaming · HTML5 / CSS3 / JavaScript</p>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite">
+</div>
+</body>
+</html>

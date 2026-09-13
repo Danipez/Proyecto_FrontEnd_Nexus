@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="NEXUS Gaming: proyecto académico de tienda de componentes, periféricos y consolas.">
+<title>Contacto | NEXUS Gaming</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css?v=2">
+<script src="js/app.js?v=2" defer>
+</script>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<div class="announcement">TU PRÓXIMO NIVEL EMPIEZA AQUÍ <span>Proyecto académico · Compras de demostración</span>
+</div>
+<header class="site-header">
+<a class="brand" href="index.html">
+<span class="brand-icon">N</span>NEXUS<span class="brand-small">GAMING</span>
+</a>
+<nav aria-label="Navegación principal">
+<a href="index.html">Inicio</a>
+<a href="productos.html">Catálogo</a>
+<a href="contacto.html">Contacto</a>
+<a href="admin.html" id="admin-link" hidden>Administrar</a>
+</nav>
+<div class="account">
+<a href="login.html" id="account-link">Mi cuenta</a>
+<button id="logout" class="text-button" hidden>Salir</button>
+<a class="cart-link" href="carrito.html">Carrito <span id="cart-count">0</span>
+</a>
+</div>
+</header>
+<main id="contenido">
+<section class="form-layout">
+<div>
+<p class="eyebrow">HABLEMOS DE HARDWARE</p>
+<h1>Tu setup ideal<br>empieza con<br>
+<em>una pregunta.</em>
+</h1>
+<p class="muted">Cuéntanos qué quieres armar o qué necesitas mejorar.</p>
+<article class="demo-card">
+<h2>Antes de escribir</h2>
+<p>Incluye el modelo de tu equipo, los componentes que tienes y tu presupuesto aproximado.</p>
+<p>Este formulario demuestra validaciones; no envía mensajes.</p>
+</article>
+</div>
+<form id="contact-form" novalidate>
+<h2>Cuéntanos tu idea</h2>
+<div class="field">
+<label for="name">Nombre completo</label>
+<input id="name" name="name" type="text" required autocomplete="name" minlength="3" maxlength="80" aria-describedby="name-error">
+<span class="error" id="name-error" aria-live="polite">
+</span>
+</div>
+<div class="field">
+<label for="email">Correo electrónico</label>
+<input id="email" name="email" type="email" required autocomplete="email" maxlength="120" placeholder="nombre@ejemplo.cl" aria-describedby="email-error">
+<span class="error" id="email-error" aria-live="polite">
+</span>
+</div>
+<div class="field">
+<label for="topic">Tema de consulta</label>
+<input id="topic" name="topic" type="text" required list="topics" maxlength="60" aria-describedby="topic-error">
+<span class="error" id="topic-error" aria-live="polite">
+</span>
+</div>
+<datalist id="topics">
+<option value="Armar un PC">
+<option value="Compatibilidad">
+<option value="Consolas">
+<option value="Periféricos">
+</datalist>
+<div class="field">
+<label for="message">Mensaje</label>
+<textarea id="message" required minlength="20" maxlength="1000" rows="5" aria-describedby="message-hint message-error">
+</textarea>
+<small id="message-hint">Entre 20 y 1000 caracteres. Incluye detalles de tu equipo.</small>
+<span class="error" id="message-error" aria-live="polite">
+</span>
+</div>
+<div class="field">
+<label class="check">
+<input id="consent" type="checkbox" required aria-describedby="consent-error"> Entiendo que es una demostración y que el mensaje no se enviará.</label>
+<span id="consent-error" class="error" aria-live="polite">
+</span>
+</div>
+<button class="button" type="submit">Validar consulta ↗</button>
+<p id="contact-status" role="status">
+</p>
+</form>
+</section>
+</main>
+<footer>
+<div>
+<a class="brand" href="index.html">NEXUS <span class="brand-small">GAMING</span>
+</a>
+<p>Componentes para tu próxima partida.</p>
+</div>
+<div>
+<strong>Explora</strong>
+<a href="productos.html">Todos los productos</a>
+<a href="contacto.html">Hablemos de tu setup</a>
+</div>
+<div>
+<strong>Sobre este proyecto</strong>
+<p>Tienda académica de demostración.<br>Precios y stock ficticios en pesos chilenos.<br>No procesa pagos ni envía pedidos.</p>
+</div>
+<p class="copyright">© 2026 NEXUS Gaming · HTML5 / CSS3 / JavaScript</p>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite">
+</div>
+</body>
+</html>
