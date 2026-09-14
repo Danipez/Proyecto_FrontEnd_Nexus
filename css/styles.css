@@ -710,3 +710,7 @@ h1 {
 .local-video p { font-size: 14px; margin-top: 12px; }
 .video-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
 .video-actions span { color: var(--muted); font-size: 13px; }
+
+.product-photo-field { margin-top: 24px; }
+#product-photo-preview { display: block; width: 180px; height: 150px; object-fit: contain; background: white; border-radius: 8px; margin: 15px 0; }
+#product-photo::file-selector-button { padding: 8px 12px; background: var(--green); color: #17200d; border: 0; border-radius: 4px; margin-right: 12px; cursor: pointer; }

@@ -6,8 +6,8 @@
 <meta name="description" content="NEXUS Gaming: proyecto de tienda de componentes, periféricos y consolas.">
 <title>Administración | NEXUS Gaming</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/styles.css?v=2">
-<script src="js/app.js?v=2" defer>
+<link rel="stylesheet" href="css/styles.css?v=photos-upload">
+<script src="js/app.js?v=session-fix-1" defer>
 </script>
 </head>
 <body>
@@ -81,6 +81,15 @@
 <label class="check">
 <input id="active" type="checkbox" checked> Visible en el catálogo</label>
 </div>
+<div class="field product-photo-field">
+<label for="product-photo">Imagen del producto (opcional)</label>
+<input id="product-photo" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="product-photo-hint product-photo-error">
+<small id="product-photo-hint">Selecciona JPG, PNG o WebP de hasta 1 MB. Se guarda en este navegador.</small>
+<span id="product-photo-error" class="error" role="status"></span>
+<img id="product-photo-preview" alt="Vista previa de la imagen del producto" hidden>
+<button id="remove-product-photo" class="secondary" type="button" hidden>Quitar imagen</button>
+</div>
+<p id="product-save-error" class="error" role="alert"></p>
 <div class="actions">
 <button class="button" type="submit">Guardar producto</button>
 <button id="cancel-product" class="secondary" type="button">Cancelar</button>
