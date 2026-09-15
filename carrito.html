@@ -7,7 +7,7 @@
 <title>Carrito | NEXUS Gaming</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/styles.css?v=photos-upload">
-<script src="js/app.js?v=session-fix-1" defer>
+<script src="js/app.js?v=demo-purchase-1" defer>
 </script>
 </head>
 <body>
@@ -49,13 +49,23 @@
 <span>Total</span>
 <strong id="total">$0</strong>
 </div>
-<p>Precios de demostración en CLP. No se realizan cobros ni despachos.</p>
+<p>Al confirmar se descontará el stock y se guardará un comprobante en este navegador. No se realizan cobros ni despachos.</p>
 <button id="checkout" class="button">Confirmar compra demo ↗</button>
 <a href="productos.html">Seguir explorando</a>
 <p id="checkout-status" role="status">
 </p>
 </aside>
 </div>
+</section>
+<section id="purchase-receipt" hidden aria-labelledby="receipt-heading">
+<p class="eyebrow">COMPRA REGISTRADA</p>
+<h2 id="receipt-heading">Última compra de demostración</h2>
+<p>Comprobante <strong id="receipt-id"></strong> · <span id="receipt-date"></span></p>
+<div class="table-wrap"><table><caption class="sr-only">Detalle de la última compra simulada</caption>
+<thead><tr><th>Producto</th><th>Unidades</th><th>Precio unitario</th><th>Subtotal</th></tr></thead>
+<tbody id="receipt-lines"></tbody></table></div>
+<p class="summary-line total">Total <strong id="receipt-total"></strong></p>
+<p class="muted">Comprobante de demostración sin validez tributaria. No se efectuó un pago. Solo se conserva la última compra en este navegador.</p>
 </section>
 </main>
 <footer>
