@@ -1,0 +1,215 @@
+{
+  "date": "2026-11-08T21:31:43.293Z",
+  "cases": [
+    {
+      "name": "Componentes React y DOM C01 ProductCard muestra datos y emite el id mediante props",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C02 ProductCard deshabilita la compra sin stock",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C03 Catalog filtra búsqueda y limpia filtros",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C04 Catalog combina categoría y precio",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C05 Contact muestra errores en DOM al enviar vacío",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C06 Contact valida y limpia la confirmación al editar",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C07 Login rechaza datos vacíos y credenciales incorrectas",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C08 Login inicia sesión y muestra la cuenta existente",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C09 Admin impide gestionar sin rol administrativo",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C10 ProductForm rechaza stock negativo y código repetido",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C11 ProductForm guarda valores numéricos y cancela",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C12 Cart agrega cambia y elimina unidades respetando stock",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C13 Checkout descuenta stock guarda comprobante y vacía carrito",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C14 Fallo de almacenamiento no muestra éxito ni cambia inventario",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C15 Receipt muestra total y no dibuja un comprobante vacío",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C16 App navega con hash y permite abrir menú móvil",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C17 Video actualiza estado y restaura póster al finalizar",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C18 Admin crea edita y elimina un producto",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Componentes React y DOM C19 ProductForm muestra errores persistentes para imagen inválida",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L01 format precios y rutas de imagen",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L02 valida la estructura del producto",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L03 filtros no modifican el catálogo original",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L04 carrito rechaza sobrestock y producto inexistente",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L05 reconciliación limita stock y elimina ocultos",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L06 venta calcula totales sin mutar y permite última unidad",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L07 venta rechaza vacío cantidades inválidas y duplicados excesivos",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L08 validación completa de producto y contacto",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L09 sesión vence a los treinta minutos",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L10 recuperación de datos corruptos y migración de almacenamiento anterior",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L11 almacenamiento falla de forma explícita",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L12 foto rechaza tipo y tamaño no permitido",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L13 foto usa FileReader y decodificación con mocks",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L14 bloqueo después de cinco intentos fallidos",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L15 acciones administrativas sin sesión son rechazadas",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    },
+    {
+      "name": "Reglas almacenamiento y mocks L16 cambio de carrito entre pestañas evita una compra obsoleta",
+      "success": true,
+      "skipped": false,
+      "errors": []
+    }
+  ]
+}

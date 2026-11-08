@@ -1,6 +1,6 @@
-__pycache__/
-*.zip
-.DS_Store
-Thumbs.db
-
+node_modules/
 .video-tools/
+dist/
+.test-build/
+coverage/
+*.zip

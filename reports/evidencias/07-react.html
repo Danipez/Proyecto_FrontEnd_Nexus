@@ -1,0 +1,36 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>E07 React props estado y Bootstrap</title><style>body{font:18px Arial;margin:32px;color:#17212e;background:#fff}h1{font-size:28px}p{line-height:1.4}pre{white-space:pre-wrap;font:15px/1.45 Consolas,monospace;background:#f3f5f7;padding:18px;border:1px solid #bcc8d3}table{border-collapse:collapse;width:100%;font-size:17px}td,th{padding:10px;border:1px solid #ccd5dc;text-align:left}th{background:#e5edf5}.ok{color:#17663d;font-weight:bold}</style><h1>E07 React props estado y Bootstrap</h1><h2>src/pages/Catalog.jsx</h2><pre>001  import React, { useState } from &quot;react&quot;;
+002  import { categories, filterProducts } from &quot;../domain&quot;;
+003  import { useStore } from &quot;../Store&quot;;
+004  import { ProductCard } from &quot;../components/ProductCard&quot;;
+005  export function Catalog() {
+006    const { products, add } = useStore();
+007    const [query, setQuery] = useState(&quot;&quot;);
+008    const [category, setCategory] = useState(&quot;&quot;);
+009    const [sort, setSort] = useState(&quot;&quot;);
+010    const [error, setError] = useState(&quot;&quot;);
+011    const visible = filterProducts(products, query, category, sort);
+012    return (
+013      &lt;&gt;
+014        &lt;p className=&quot;eyebrow&quot;&gt;ENCUENTRA TU UPGRADE&lt;/p&gt;
+015        &lt;h1&gt;Catálogo gaming&lt;/h1&gt;
+016        &lt;div className=&quot;row g-3 my-3&quot;&gt;
+017          &lt;div className=&quot;col-md-4&quot;&gt;
+018            &lt;label htmlFor=&quot;search&quot; className=&quot;form-label&quot;&gt;
+019              Buscar producto
+020            &lt;/label&gt;
+021            &lt;input
+022              id=&quot;search&quot;
+023              className=&quot;form-control&quot;
+024              value={query}
+025              onChange={(e) =&gt; setQuery(e.target.value)}
+026            /&gt;</pre><h2>src/components/ProductCard.jsx</h2><pre>020          &lt;p&gt;{product.stock ? `Disponible · ${product.stock}` : &quot;Agotado&quot;}&lt;/p&gt;
+021          &lt;strong className=&quot;fs-4 mb-3&quot;&gt;{money(product.price)}&lt;/strong&gt;
+022          &lt;button
+023            className=&quot;btn btn-primary mt-auto&quot;
+024            disabled={!product.stock}
+025            onClick={() =&gt; onAdd(product.id)}
+026          &gt;
+027            {product.stock ? &quot;Agregar al carrito&quot; : &quot;Sin stock&quot;}
+028          &lt;/button&gt;
+029        &lt;/div&gt;
+030      &lt;/article&gt;</pre>

@@ -1,0 +1,28 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>E05 Configuración de Jasmine y Karma</title><style>body{font:18px Arial;margin:32px;color:#17212e;background:#fff}h1{font-size:28px}p{line-height:1.4}pre{white-space:pre-wrap;font:15px/1.45 Consolas,monospace;background:#f3f5f7;padding:18px;border:1px solid #bcc8d3}table{border-collapse:collapse;width:100%;font-size:17px}td,th{padding:10px;border:1px solid #ccd5dc;text-align:left}th{background:#e5edf5}.ok{color:#17663d;font-weight:bold}</style><h1>E05 Configuración de Jasmine y Karma</h1><h2>karma.conf.cjs</h2><pre>026      frameworks: [&quot;jasmine&quot;],
+027      files: [
+028        &quot;.test-build/suite.js&quot;,
+029        { pattern: &quot;public/assets/**/*&quot;, included: false, served: true },
+030      ],
+031      proxies: { &quot;/assets/&quot;: &quot;/base/public/assets/&quot; },
+032      reporters: [&quot;progress&quot;, &quot;coverage&quot;, &quot;results&quot;],
+033      plugins: [
+034        &quot;karma-jasmine&quot;,
+035        &quot;karma-chrome-launcher&quot;,
+036        &quot;karma-coverage&quot;,
+037        { &quot;reporter:results&quot;: [&quot;type&quot;, Results] },
+038      ],
+039      browsers: [&quot;ChromeHeadless&quot;],
+040      singleRun: true,
+041      client: { jasmine: { random: false } },
+042      coverageReporter: {
+043        dir: &quot;coverage&quot;,
+044        subdir: &quot;.&quot;,
+045        reporters: [
+046          { type: &quot;html&quot; },
+047          { type: &quot;json-summary&quot; },
+048          { type: &quot;text-summary&quot; },
+049        ],
+050      },
+051      browserNoActivityTimeout: 30000,
+052    });
+053  };</pre>

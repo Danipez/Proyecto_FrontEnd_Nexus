@@ -1,0 +1,36 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>E06 Mocks y comprobaciones del DOM</title><style>body{font:18px Arial;margin:32px;color:#17212e;background:#fff}h1{font-size:28px}p{line-height:1.4}pre{white-space:pre-wrap;font:15px/1.45 Consolas,monospace;background:#f3f5f7;padding:18px;border:1px solid #bcc8d3}table{border-collapse:collapse;width:100%;font-size:17px}td,th{padding:10px;border:1px solid #ccd5dc;text-align:left}th{background:#e5edf5}.ok{color:#17663d;font-weight:bold}</style><h1>E06 Mocks y comprobaciones del DOM</h1><h2>tests/suite.jsx</h2><pre>036    const data = { ...initial };
+037    return {
+038      getItem: jasmine.createSpy(&quot;getItem&quot;).and.callFake((k) =&gt; data[k] ?? null),
+039      setItem: jasmine.createSpy(&quot;setItem&quot;).and.callFake((k, v) =&gt; (data[k] = v)),
+040      removeItem: jasmine
+041        .createSpy(&quot;removeItem&quot;)
+042        .and.callFake((k) =&gt; delete data[k]),
+043    };
+044  }
+045  let box, root, store, session, api;
+046  function Probe() {
+047    api = useStore();</pre><h2>tests/suite.jsx</h2><pre>131    });
+132    it(&quot;C03 Catalog filtra búsqueda y limpia filtros&quot;, async () =&gt; {
+133      await wrapped(&lt;Catalog /&gt;);
+134      await fill(&quot;search&quot;, &quot;Ryzen&quot;);
+135      expect(box.querySelectorAll(&quot;article&quot;).length).toBe(1);
+136      await click(box.querySelector(&quot;button&quot;));
+137      expect(box.querySelectorAll(&quot;article&quot;).length).toBe(6);
+138      await fill(&quot;search&quot;, &quot;inexistente&quot;);
+139      expect(box.textContent).toContain(&quot;No encontramos&quot;);
+140    });
+141    it(&quot;C04 Catalog combina categoría y precio&quot;, async () =&gt; {
+142      await wrapped(&lt;Catalog /&gt;);
+143      await fill(&quot;filter-category&quot;, &quot;Periféricos&quot;);
+144      await fill(&quot;sort&quot;, &quot;asc&quot;);
+145      expect(box.querySelectorAll(&quot;article&quot;).length).toBe(2);
+146      expect(box.querySelector(&quot;article&quot;).textContent).toContain(&quot;Mouse&quot;);
+147    });
+148    it(&quot;C05 Contact muestra errores en DOM al enviar vacío&quot;, async () =&gt; {
+149      await mount(&lt;Contact /&gt;);
+150      await submit();
+151      expect(box.querySelectorAll(&#x27;[role=&quot;alert&quot;]&#x27;).length).toBe(5);
+152      expect(box.querySelector(&quot;#name&quot;).getAttribute(&quot;aria-invalid&quot;)).toBe(
+153        &quot;true&quot;,
+154      );
+155    });</pre>
