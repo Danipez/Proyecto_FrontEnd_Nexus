@@ -4,3 +4,8 @@ dist/
 .test-build/
 coverage/
 *.zip
+
+# Material personal de estudio y preparación de la exposición
+documentos/Informacion_de_codigo*.docx
+documentos/Guia_Proyecto_y_Cambios*.docx
+documentos/Presentacion_NEXUS*.pptx

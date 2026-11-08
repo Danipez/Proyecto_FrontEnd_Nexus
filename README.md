@@ -37,7 +37,7 @@ Jasmine define 35 casos. Karma los ejecuta en un navegador Chromium sin interfaz
 - src/storage.js: persistencia y lectura de fotografías.
 - tests/suite.jsx: pruebas de componentes, DOM y reglas con mocks.
 - public/assets: fotografías, ilustraciones y video.
-- documentos: ERS, explicación de código y cobertura de testing.
+- documentos: ERS y cobertura de testing, los dos informes solicitados en la evaluación.
 
 ## Acceso y alcance
 
