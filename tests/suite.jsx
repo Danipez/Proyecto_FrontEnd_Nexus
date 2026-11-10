@@ -32,6 +32,7 @@ import {
   STATE_KEY,
 } from "../src/storage";
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+import { apiClient } from "../src/api";
 function memory(initial = {}) {
   const data = { ...initial };
   return {
@@ -52,12 +53,94 @@ async function mount(node) {
 }
 async function wrapped(node) {
   await mount(
-    <StoreProvider storage={store} sessionStore={session}>
+    <StoreProvider storage={store} sessionStore={session} backend={null}>
       <Probe />
       {node}
     </StoreProvider>,
   );
 }
+async function online(node, backend) {
+  await mount(
+    <StoreProvider storage={store} sessionStore={session} backend={backend}>
+      <Probe />
+      {node}
+    </StoreProvider>,
+  );
+}
+describe("Conexión del frontend con la API", () => {
+  it("A01 muestra error de conexión y permite reintentar", async () => {
+    const backend = {
+      products: jasmine.createSpy().and.rejectWith(Error("API desconectada")),
+    };
+    await online(<App />, backend);
+    expect(box.textContent).toContain("API desconectada");
+    backend.products.and.resolveTo(structuredClone(SEED));
+    await click(
+      [...box.querySelectorAll("button")].find(
+        (b) => b.textContent === "Reintentar conexión",
+      ),
+    );
+    expect(api.products.length).toBe(6);
+    expect(api.connectionError).toBe("");
+  });
+  it("A02 login y CRUD esperan la respuesta del servidor", async () => {
+    const backend = {
+      products: async () => structuredClone(SEED),
+      login: async () => ({
+        ...authenticate("admin", "Admin123"),
+        token: "test-token",
+      }),
+      saveProduct: jasmine.createSpy().and.resolveTo({ ...product, id: 10 }),
+      deleteProduct: jasmine.createSpy().and.resolveTo({}),
+    };
+    await online(<Admin />, backend);
+    await act(async () => api.login("admin", "Admin123"));
+    await act(async () => api.saveProduct({ ...product, id: undefined }));
+    expect(api.products.length).toBe(7);
+    expect(backend.saveProduct.calls.mostRecent().args[1]).toBe("test-token");
+    await act(async () => api.deleteProduct(10));
+    expect(api.products.length).toBe(6);
+  });
+  it("A03 un error de compra conserva el carrito y reintenta con la misma clave", async () => {
+    const checkout = jasmine.createSpy().and.rejectWith(Error("Sin conexión"));
+    await online(<Cart />, {
+      products: async () => structuredClone(SEED),
+      checkout,
+    });
+    await act(async () => api.add(1));
+    await act(async () => {
+      await expectAsync(api.checkout()).toBeRejectedWithError("Sin conexión");
+    });
+    const first = checkout.calls.mostRecent().args[0].requestId;
+    const sale = prepareSale(SEED, [{ id: 1, qty: 1 }]);
+    checkout.and.resolveTo({
+      products: sale.products,
+      receipt: {
+        id: "NX-API",
+        date: new Date().toISOString(),
+        lines: sale.lines,
+        total: sale.total,
+      },
+    });
+    await act(async () => api.checkout());
+    expect(checkout.calls.mostRecent().args[0].requestId).toBe(first);
+    expect(api.products[0].stock).toBe(7);
+    expect(api.cart.length).toBe(0);
+  });
+  it("A04 el cliente HTTP envía token y muestra los errores de la API", async () => {
+    spyOn(window, "fetch").and.resolveTo(
+      new Response(JSON.stringify({ error: "Acceso denegado" }), {
+        status: 401,
+      }),
+    );
+    await expectAsync(
+      apiClient.saveProduct(product, "token"),
+    ).toBeRejectedWithError("Acceso denegado");
+    const [url, options] = window.fetch.calls.mostRecent().args;
+    expect(url).toBe("/api/products/10");
+    expect(options.headers.Authorization).toBe("Bearer token");
+  });
+});
 async function click(el) {
   expect(el).not.toBeNull();
   await act(async () => el.click());

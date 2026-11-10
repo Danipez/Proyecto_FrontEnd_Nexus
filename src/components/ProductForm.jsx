@@ -18,20 +18,23 @@ export function ProductForm({ product, products, onSave, onCancel }) {
   const [errors, setErrors] = useState({});
   const [failure, setFailure] = useState("");
   const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const request = useRef(0);
   const update = (e) => setV({ ...v, [e.target.name]: e.target.value });
   return (
     <form
       className="panel p-4 mb-4"
       noValidate
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
         const next = validateProduct(v, products);
         if (errors.image) next.image = errors.image;
         setErrors(next);
-        if (Object.keys(next).length || loading) return;
+        if (Object.keys(next).length || loading || saving) return;
+        setSaving(true);
+        setFailure("");
         try {
-          onSave({
+          await onSave({
             ...v,
             code: v.code.trim().toUpperCase(),
             name: v.name.trim(),
@@ -40,6 +43,8 @@ export function ProductForm({ product, products, onSave, onCancel }) {
           });
         } catch (err) {
           setFailure(err.message);
+        } finally {
+          setSaving(false);
         }
       }}
     >
@@ -157,8 +162,12 @@ export function ProductForm({ product, products, onSave, onCancel }) {
           {failure}
         </p>
       )}
-      <button className="btn btn-primary" disabled={loading}>
-        {loading ? "Cargando imagen…" : "Guardar producto"}
+      <button className="btn btn-primary" disabled={loading || saving}>
+        {saving
+          ? "Guardando…"
+          : loading
+            ? "Cargando imagen…"
+            : "Guardar producto"}
       </button>
       <button
         type="button"

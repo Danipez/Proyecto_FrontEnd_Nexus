@@ -32,8 +32,8 @@ export function Admin() {
           key={editing?.id || "new"}
           product={editing}
           products={products}
-          onSave={(p) => {
-            saveProduct(p);
+          onSave={async (p) => {
+            await saveProduct(p);
             setEditing(undefined);
           }}
           onCancel={() => setEditing(undefined)}
@@ -71,10 +71,10 @@ export function Admin() {
                     </button>
                     <button
                       className="btn btn-sm btn-outline-danger"
-                      onClick={() => {
+                      onClick={async () => {
                         if (window.confirm(`¿Eliminar ${p.name}?`)) {
                           try {
-                            deleteProduct(p.id);
+                            await deleteProduct(p.id);
                             if (editing?.id === p.id) setEditing(undefined);
                           } catch (e) {
                             setError(e.message);

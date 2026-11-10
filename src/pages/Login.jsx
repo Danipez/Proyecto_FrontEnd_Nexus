@@ -7,6 +7,7 @@ export function Login() {
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
   if (session)
     return (
       <section className="panel p-5">
@@ -29,15 +30,19 @@ export function Login() {
         <form
           className="panel p-4"
           noValidate
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
+            if (busy) return;
+            setBusy(true);
             try {
               if (!user.trim() || !password)
                 throw Error("Completa usuario y contraseña.");
-              const s = login(user, password);
+              const s = await login(user, password);
               location.hash = s.role === "admin" ? "#/admin" : "#/productos";
             } catch (err) {
               setError(err.message);
+            } finally {
+              setBusy(false);
             }
           }}
         >
@@ -72,7 +77,9 @@ export function Login() {
               {error}
             </p>
           )}
-          <button className="btn btn-primary w-100">Ingresar</button>
+          <button className="btn btn-primary w-100" disabled={busy}>
+            {busy ? "Ingresando…" : "Ingresar"}
+          </button>
         </form>
       </div>
     </div>

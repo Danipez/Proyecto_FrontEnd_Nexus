@@ -9,3 +9,8 @@ coverage/
 documentos/Informacion_de_codigo*.docx
 documentos/Guia_Proyecto_y_Cambios*.docx
 documentos/Presentacion_NEXUS*.pptx
+
+server/db.local.json
+.env
+reports/
+documentos/

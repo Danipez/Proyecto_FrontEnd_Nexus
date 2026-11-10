@@ -1,4 +1,12 @@
 import React, { useEffect, useState } from "react";
+import {
+  HashRouter,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { useStore } from "./Store";
 import { Home } from "./pages/Home";
 import { Catalog } from "./pages/Catalog";
@@ -15,22 +23,33 @@ const routes = {
   "/admin": Admin,
 };
 export function App() {
-  const [path, setPath] = useState(location.hash.slice(1) || "/");
+  return (
+    <HashRouter>
+      <AppContent />
+    </HashRouter>
+  );
+}
+function AppContent() {
+  const { pathname: path } = useLocation();
+  const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
-  const { cart, session, logout, message, setMessage } = useStore();
+  const {
+    cart,
+    session,
+    logout,
+    message,
+    setMessage,
+    loading,
+    connectionError,
+    refresh,
+  } = useStore();
   useEffect(() => {
-    const change = () => {
-      setPath(location.hash.slice(1) || "/");
-      setExpanded(false);
-      window.scrollTo(0, 0);
-    };
-    window.addEventListener("hashchange", change);
-    return () => window.removeEventListener("hashchange", change);
-  }, []);
+    setExpanded(false);
+    window.scrollTo(0, 0);
+  }, [path]);
   useEffect(() => {
     document.title = `NEXUS Gaming · ${path === "/" ? "Inicio" : path.slice(1)}`;
   }, [path]);
-  const Page = routes[path];
   return (
     <>
       <a
@@ -49,9 +68,9 @@ export function App() {
           className="navbar navbar-expand-lg navbar-dark container"
           aria-label="Principal"
         >
-          <a className="navbar-brand fw-bold" href="#/">
+          <Link className="navbar-brand fw-bold" to="/">
             NEXUS <span>GAMING</span>
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             aria-label="Abrir menú"
@@ -75,27 +94,27 @@ export function App() {
                   ? [["/admin", "Administrar"]]
                   : []),
               ].map(([url, text]) => (
-                <a
+                <Link
                   className={`nav-link ${path === url ? "active" : ""}`}
                   aria-current={path === url ? "page" : undefined}
                   key={url}
-                  href={"#" + url}
+                  to={url}
                 >
                   {text}
-                </a>
+                </Link>
               ))}
-              <a className="nav-link" href="#/carrito">
+              <Link className="nav-link" to="/carrito">
                 Carrito{" "}
                 <span className="badge text-bg-light">
                   {cart.reduce((n, i) => n + i.qty, 0)}
                 </span>
-              </a>
+              </Link>
               {session && (
                 <button
                   className="btn btn-outline-light"
                   onClick={() => {
                     logout();
-                    location.hash = "/";
+                    navigate("/");
                   }}
                 >
                   Salir
@@ -120,20 +139,38 @@ export function App() {
             />
           </div>
         )}
-        {Page ? (
-          <Page />
-        ) : (
-          <section>
-            <h1>Página no encontrada</h1>
-            <a href="#/">Volver al inicio</a>
+        {loading ? (
+          <p role="status">Cargando productos…</p>
+        ) : connectionError ? (
+          <section className="panel p-4" role="alert">
+            <h1>No pudimos conectar con el catálogo</h1>
+            <p>{connectionError}</p>
+            <button className="btn btn-primary" onClick={refresh}>
+              Reintentar conexión
+            </button>
           </section>
+        ) : (
+          <Routes>
+            {Object.entries(routes).map(([url, Page]) => (
+              <Route key={url} path={url} element={<Page />} />
+            ))}
+            <Route
+              path="*"
+              element={
+                <section>
+                  <h1>Página no encontrada</h1>
+                  <Link to="/">Volver al inicio</Link>
+                </section>
+              }
+            />
+          </Routes>
         )}
       </main>
       <footer className="border-top py-4">
         <div className="container d-flex flex-wrap gap-4 justify-content-between">
           <strong>NEXUS GAMING</strong>
           <span>Componentes para tu próxima partida.</span>
-          <a href="#/contacto">Contacto</a>
+          <Link to="/contacto">Contacto</Link>
         </div>
       </footer>
     </>

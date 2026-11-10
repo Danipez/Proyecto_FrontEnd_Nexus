@@ -4,16 +4,21 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
+    "dev": "node scripts/dev.mjs",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test": "node scripts/test-bundle.mjs && karma start karma.conf.cjs --single-run",
-    "test:watch": "node scripts/test-bundle.mjs && karma start karma.conf.cjs"
+    "test:watch": "node scripts/test-bundle.mjs && karma start karma.conf.cjs",
+    "api": "node server/index.mjs",
+    "dev:client": "vite",
+    "test:api": "node --test tests/api.test.mjs"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "json-server": "0.17.4",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.18.5"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",

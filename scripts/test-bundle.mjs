@@ -9,7 +9,7 @@ await build({
   outfile: ".test-build/suite.js",
   sourcemap: "inline",
   jsx: "automatic",
-  define: { "process.env.NODE_ENV": '"test"' },
+  define: { "process.env.NODE_ENV": '"test"', "import.meta.env": '{}' },
   plugins: [
     {
       name: "coverage",

@@ -1,7 +1,5 @@
 name: Publicar NEXUS en GitHub Pages
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -23,7 +21,13 @@ jobs:
       - run: pnpm test
         env:
           CHROME_BIN: /usr/bin/google-chrome
+      - name: Comprobar direccion de la API
+        run: test -n "$VITE_API_URL"
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
       - run: pnpm build
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

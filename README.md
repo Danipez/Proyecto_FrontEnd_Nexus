@@ -1,64 +1,82 @@
 # NEXUS Gaming
 
-Frontend de tienda de componentes, periféricos y consolas. Evaluación Parcial 2, DSY1104.
+Proyecto React con Bootstrap, React Router y API de JSON Server.
 
-## Abrir la aplicación
+## Iniciar desde cero
 
-En Windows, ejecutar `INICIAR.cmd` y visitar `http://127.0.0.1:8081`. Mantener la terminal abierta. El archivo sirve la compilación incluida en `dist/`; si el puerto está ocupado, cerrar el servidor anterior o ejecutar en PowerShell `$env:PORT=8082` antes de `node scripts/serve.mjs`.
-
-## Desarrollo
-
-Node.js 22.12 o superior. Para reproducir exactamente las dependencias, usar el archivo pnpm-lock.yaml:
+Instalar Node.js 22.12 o superior. Abrir una terminal en esta carpeta:
 
 ```powershell
-npm install --global pnpm@11.25.0
-pnpm install --frozen-lockfile
-pnpm dev
+npm.cmd install
+npm.cmd run dev
 ```
 
-También se admite `npm install` y luego `npm run dev`, aunque la resolución exacta de versiones está fijada en el lock de pnpm. El servidor de desarrollo indica su dirección en la terminal. Tras modificar el código, ejecutar `pnpm build` para actualizar dist.
+Abrir http://127.0.0.1:5173 y mantener la terminal abierta. El comando inicia Vite y JSON Server juntos. También se puede ejecutar INICIAR.cmd. Para detener ambos, presionar Ctrl+C.
 
-## Pruebas y cobertura
+Para instalar exactamente las dependencias del lockfile:
 
 ```powershell
-pnpm test
-pnpm build
+npm.cmd install --global pnpm@11.25.0
+pnpm.cmd install --frozen-lockfile
+pnpm.cmd dev
 ```
 
-Jasmine define 35 casos. Karma los ejecuta en un navegador Chromium sin interfaz. En Windows se utiliza Edge cuando está instalado en su ruta habitual; en otros equipos, establecer CHROME_BIN con la ruta a Chrome o Chromium. Istanbul instrumenta src y karma-coverage genera coverage/index.html y coverage/coverage-summary.json. Los resultados individuales están en reports/test-results.json. Se excluyen main.jsx, seed.js, CSS, recursos y dependencias de la métrica de código.
+## Cuentas
+
+- Administrador: admin / Admin123
+- Cliente: jperez / User123
+
+No se incluye registro de cuentas. La API valida el acceso y entrega una sesión de 30 minutos. Reiniciar la API invalida sus sesiones; se debe ingresar nuevamente para modificar productos.
 
 ## Organización
 
-- src/App.jsx: rutas por hash, menú y estructura común.
-- src/Store.jsx: estado compartido, sesión y operaciones de inventario y carrito.
-- src/pages: Inicio, Catálogo, Carrito, Login, Contacto y Administración.
-- src/components: controles reutilizables con propiedades y estado.
-- src/domain.js: reglas independientes de la interfaz.
-- src/storage.js: persistencia y lectura de fotografías.
-- tests/suite.jsx: pruebas de componentes, DOM y reglas con mocks.
-- public/assets: fotografías, ilustraciones y video.
-- documentos: ERS y cobertura de testing, los dos informes solicitados en la evaluación.
+- src/pages y src/components: vistas y componentes.
+- src/App.jsx: HashRouter, Routes y Route de React Router.
+- src/api.js: peticiones HTTP a la API.
+- src/Store.jsx: estado compartido y acciones.
+- src/domain.js: validaciones y reglas del carrito y la compra.
+- server/index.mjs: JSON Server y rutas de acceso y compra.
+- server/db.json: catálogo inicial.
+- server/db.local.json: datos de trabajo, creado automáticamente; no se sube a Git.
+- tests: pruebas conservadas como verificación adicional.
+- public/assets: imágenes y video utilizados por el sitio.
 
-## Acceso y alcance
+## API
 
-Cuenta administrativa: `admin` / `Admin123`. Cuenta de cliente: `jperez` / `User123`.
+URL local: http://127.0.0.1:3001/api
 
-La aplicación gestiona catálogo, carrito, compra con descuento de stock y comprobante local. El almacenamiento opera en el navegador y no se comparte entre computadores. El acceso se valida en el cliente; no constituye autenticación de servidor. La versión no integra pasarela bancaria, facturación tributaria ni servicio de correo. Contacto valida los campos y confirma esa validación, sin enviar mensajes.
+| Método | Ruta | Acción |
+| --- | --- | --- |
+| GET | /products | Consultar catálogo |
+| GET | /products/:id | Consultar producto |
+| POST | /products | Crear producto con token de administrador |
+| PUT o PATCH | /products/:id | Modificar producto con token de administrador |
+| DELETE | /products/:id | Eliminar producto con token de administrador |
+| POST | /login | Validar usuario y contraseña |
+| POST | /logout | Cerrar sesión |
+| POST | /checkout | Validar compra, descontar stock y guardar comprobante |
+| GET | /health | Comprobar disponibilidad |
 
-Los datos anteriores se importan desde nexus_products, nexus_cart y nexus_last_order cuando no existe nexus_state_v2 y se utiliza el mismo origen. Cambiar de puerto, host o navegador implica otro almacenamiento. La sesión conserva su clave nexus_session y su vencimiento de treinta minutos.
+El inventario y las compras quedan en el archivo JSON del servidor. El carrito y la última compra consultada se conservan además en el navegador. No se realizan cobros bancarios. Contacto valida sus campos sin enviar correo.
+
+## Verificación
+
+Las pruebas se conservan como apoyo aunque no sean evaluables según la indicación actualizada.
+
+```powershell
+npm.cmd test
+npm.cmd run test:api
+npm.cmd run build
+```
+
+Jasmine y Karma ejecutan los casos de interfaz y reglas en Edge o Chrome. La prueba de API usa una base temporal y comprueba CRUD, permisos, compra y persistencia. Los resultados y la cobertura se generan localmente y no forman parte del código entregado.
 
 ## Publicación
 
-Repositorio del proyecto: https://github.com/Danipez/Proyecto_FrontEnd_Nexus
+GitHub Pages solo aloja el frontend y no ejecuta JSON Server. Para usar esta versión completa, iniciar el proyecto localmente o publicar la API en un servidor Node.js y definir VITE_API_URL antes de compilar. El workflow de Pages se ejecuta manualmente y requiere esa dirección para no publicar una página desconectada.
 
-El contenido de dist se puede publicar en un servidor estático o GitHub Pages. El enrutamiento por hash permite recargar rutas sin configuración de redirecciones del servidor. El workflow verify.yml ejecuta pruebas y compilación al recibir cambios; no publica ni atribuye contribuciones automáticamente a otras personas.
+## Referencias técnicas
 
-## Referencias
-
-- React: https://react.dev/learn
-- Bootstrap: https://getbootstrap.com/docs/5.3/layout/grid/
-- Jasmine: https://jasmine.github.io/
-- Karma: https://karma-runner.github.io/latest/index.html
+- React Router: https://reactrouter.com/start/declarative/routing
+- JSON Server 0.17.4: https://github.com/typicode/json-server/tree/v0.17.4
 - Fotografía del setup: ELLA DON / Unsplash, https://unsplash.com/photos/JomkRNkzKhE
-
-Las fotografías de productos y el video se conservaron de la versión anterior del proyecto.
