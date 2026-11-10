@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { useStore } from "../Store";
 import { validateRegister } from "../domain";
 import { Field } from "../components/Field";
@@ -13,7 +12,6 @@ const empty = {
 };
 export function Register() {
   const { session, register, logout } = useStore();
-  const navigate = useNavigate();
   const [v, setV] = useState(empty);
   const [errors, setErrors] = useState({});
   const [formError, setFormError] = useState("");
@@ -24,9 +22,9 @@ export function Register() {
       <section className="panel p-5">
         <h1>Ya tienes una sesión activa</h1>
         <p>Sesión iniciada como {session.user}.</p>
-        <Link className="btn btn-primary" to="/productos">
+        <a className="btn btn-primary" href="#/productos">
           Ir al catálogo
-        </Link>
+        </a>
         <button className="btn btn-outline-light ms-2" onClick={logout}>
           Cerrar sesión
         </button>
@@ -52,7 +50,7 @@ export function Register() {
             setBusy(true);
             try {
               await register(v);
-              navigate("/productos");
+              location.hash = "#/productos";
             } catch (err) {
               setFormError(err.message);
             } finally {
@@ -138,7 +136,7 @@ export function Register() {
             {busy ? "Creando cuenta…" : "Registrarme"}
           </button>
           <p className="mt-3 mb-0 text-center">
-            ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
+            ¿Ya tienes cuenta? <a href="#/login">Inicia sesión</a>
           </p>
         </form>
       </div>
