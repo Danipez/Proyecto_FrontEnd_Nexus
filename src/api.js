@@ -32,6 +32,7 @@ async function request(route, method = "GET", data, token) {
 export const apiClient = {
   products: () => request("/products"),
   login: (user, password) => request("/login", "POST", { user, password }),
+  register: (data) => request("/register", "POST", data),
   logout: (token) => request("/logout", "POST", {}, token),
   saveProduct: (p, token) =>
     request(

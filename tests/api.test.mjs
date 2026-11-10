@@ -131,3 +131,43 @@ test("API completa: permisos, CRUD, compra, concurrencia y persistencia", async 
     fs.rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test("API registro: crea cuenta, impide duplicados y permite iniciar sesión", async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "nexus-reg-"));
+  const file = path.join(dir, "db.json");
+  fs.copyFileSync(new URL("../server/db.json", import.meta.url), file);
+  const server = createApi(file).listen(0, "127.0.0.1");
+  await new Promise((resolve) => server.once("listening", resolve));
+  const base = `http://127.0.0.1:${server.address().port}/api`;
+  const post = async (route, body) => {
+    const r = await fetch(base + route, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    return { status: r.status, data: await r.json() };
+  };
+  const ok = { name: "Ana Soto", user: "AnaS", email: "ana@mail.cl", password: "Clave1234" };
+  try {
+    const created = await post("/register", ok);
+    assert.equal(created.status, 201);
+    assert.equal(created.data.role, "user");
+    assert.equal(created.data.user, "anas");
+    assert.ok(created.data.token);
+    assert.equal((await post("/register", ok)).status, 409);
+    assert.equal((await post("/register", { ...ok, user: "admin" })).status, 409);
+    assert.equal((await post("/register", { ...ok, user: "otra", password: "corta" })).status, 400);
+    assert.equal((await post("/register", { ...ok, user: "otra", email: "x" })).status, 400);
+    assert.equal((await post("/login", { user: "anas", password: "mala" })).status, 401);
+    const login = await post("/login", { user: "AnaS", password: "Clave1234" });
+    assert.equal(login.status, 200);
+    assert.equal(login.data.role, "user");
+    const saved = JSON.parse(fs.readFileSync(file, "utf8")).users[0];
+    assert.notEqual(saved.hash, "Clave1234");
+    assert.equal(saved.password, undefined);
+    const users = await fetch(base + "/users");
+    assert.equal(users.status, 404);
+  } finally {
+    server.close();
+  }
+});

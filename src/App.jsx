@@ -12,6 +12,7 @@ import { Home } from "./pages/Home";
 import { Catalog } from "./pages/Catalog";
 import { Cart } from "./pages/Cart";
 import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
 import { Contact } from "./pages/Contact";
 import { Admin } from "./pages/Admin";
 const routes = {
@@ -19,6 +20,7 @@ const routes = {
   "/productos": Catalog,
   "/carrito": Cart,
   "/login": Login,
+  "/registro": Register,
   "/contacto": Contact,
   "/admin": Admin,
 };

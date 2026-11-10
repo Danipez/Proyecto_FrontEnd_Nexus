@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useStore } from "../Store";
 import { Field } from "../components/Field";
 export function Login() {
@@ -80,6 +81,9 @@ export function Login() {
           <button className="btn btn-primary w-100" disabled={busy}>
             {busy ? "Ingresando…" : "Ingresar"}
           </button>
+          <p className="mt-3 mb-0 text-center">
+            ¿Aún no tienes cuenta? <Link to="/registro">Regístrate</Link>
+          </p>
         </form>
       </div>
     </div>

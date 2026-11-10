@@ -149,3 +149,38 @@ export function authenticate(user, password, now = Date.now()) {
   if (!role) throw Error("Usuario o contraseña incorrectos.");
   return { user: name, role, expires: now + 1800000 };
 }
+
+export const RESERVED_USERS = ["admin", "jperez"];
+export function validateRegister(v, taken = []) {
+  const e = {};
+  const name = (v.name || "").trim();
+  const user = (v.user || "").trim().toLowerCase();
+  const email = (v.email || "").trim();
+  const password = v.password || "";
+  if (name.length < 3 || name.length > 80)
+    e.name = "El nombre debe tener entre 3 y 80 caracteres.";
+  if (!/^[a-z0-9._-]{3,20}$/.test(user))
+    e.user = "Usa entre 3 y 20 letras, números, punto, guion o guion bajo.";
+  else if (RESERVED_USERS.includes(user) || taken.includes(user))
+    e.user = "Ese nombre de usuario ya está en uso.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 120)
+    e.email = "Escribe un correo válido.";
+  if (
+    password.length < 8 ||
+    password.length > 64 ||
+    !/[A-Za-z]/.test(password) ||
+    !/\d/.test(password)
+  )
+    e.password = "Usa entre 8 y 64 caracteres, con al menos una letra y un número.";
+  if (!e.password && password !== (v.confirm ?? ""))
+    e.confirm = "Las contraseñas no coinciden.";
+  if (!v.consent) e.consent = "Debes aceptar los términos para crear la cuenta.";
+  return e;
+}
+// Solo para el modo sin API (pruebas/demostración): ofusca la clave en localStorage.
+// La seguridad real la da el servidor, que usa scrypt con sal.
+export function localHash(text) {
+  let h = 5381;
+  for (const c of "nexus:" + text) h = ((h * 33) ^ c.charCodeAt(0)) >>> 0;
+  return h.toString(16);
+}

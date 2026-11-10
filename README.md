@@ -52,6 +52,7 @@ URL local: http://127.0.0.1:3001/api
 | POST | /products | Crear producto con token de administrador |
 | PUT o PATCH | /products/:id | Modificar producto con token de administrador |
 | DELETE | /products/:id | Eliminar producto con token de administrador |
+| POST | /register | Crear cuenta de cliente (clave con scrypt) e iniciar sesión |
 | POST | /login | Validar usuario y contraseña |
 | POST | /logout | Cerrar sesión |
 | POST | /checkout | Validar compra, descontar stock y guardar comprobante |

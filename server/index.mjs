@@ -2,13 +2,24 @@ import jsonServer from "json-server";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { randomUUID } from "node:crypto";
+import { randomUUID, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import {
   authenticate,
   prepareSale,
   validateProduct,
   validProduct,
+  validateRegister,
 } from "../src/domain.js";
+
+const hashPassword = (password, salt = randomBytes(16).toString("hex")) => ({
+  salt,
+  hash: scryptSync(password, salt, 64).toString("hex"),
+});
+const samePassword = (password, u) =>
+  timingSafeEqual(
+    Buffer.from(hashPassword(password, u.salt).hash, "hex"),
+    Buffer.from(u.hash, "hex"),
+  );
 
 export function createApi(dbFile) {
   const app = jsonServer.create();
@@ -20,6 +31,55 @@ export function createApi(dbFile) {
   app.get("/api/health", (_, res) =>
     res.json({ status: "ok", service: "NEXUS API" }),
   );
+  const users = () => router.db.getState().users || [];
+  const openSession = (user, role) => {
+    const session = {
+      user,
+      role,
+      expires: Date.now() + 1800000,
+      token: randomUUID(),
+    };
+    for (const [token, s] of sessions)
+      if (s.expires <= Date.now()) sessions.delete(token);
+    sessions.set(session.token, session);
+    return session;
+  };
+  const signups = new Map();
+  app.post("/api/register", (req, res) => {
+    const key = req.ip;
+    const recent = (signups.get(key) || []).filter((t) => t > Date.now() - 600000);
+    if (recent.length >= 10)
+      return res
+        .status(429)
+        .json({ error: "Demasiados registros. Inténtalo más tarde." });
+    signups.set(key, [...recent, Date.now()]);
+    const b = req.body || {};
+    if (
+      ["name", "user", "email", "password"].some((k) => typeof b[k] !== "string")
+    )
+      return res.status(400).json({ error: "Completa todos los campos." });
+    const current = users();
+    const errors = validateRegister(
+      { ...b, confirm: b.password, consent: true },
+      current.map((u) => u.user),
+    );
+    if (Object.keys(errors).length)
+      return res
+        .status(Object.keys(errors).includes("user") ? 409 : 400)
+        .json({ error: Object.values(errors)[0], fields: errors });
+    const name = b.user.trim().toLowerCase();
+    const record = {
+      id: Math.max(0, ...current.map((u) => u.id)) + 1,
+      name: b.name.trim(),
+      user: name,
+      email: b.email.trim(),
+      ...hashPassword(b.password),
+      createdAt: new Date().toISOString(),
+    };
+    const state = router.db.getState();
+    router.db.setState({ ...state, users: [...current, record] }).write();
+    res.status(201).json(openSession(name, "user"));
+  });
   app.post("/api/login", (req, res) => {
     const key = req.ip;
     const previous = attempts.get(key) || { count: 0, until: 0 };
@@ -33,13 +93,15 @@ export function createApi(dbFile) {
         typeof req.body.password !== "string"
       )
         throw Error("Completa usuario y contraseña.");
-      const session = {
-        ...authenticate(req.body.user, req.body.password),
-        token: randomUUID(),
-      };
-      for (const [token, s] of sessions)
-        if (s.expires <= Date.now()) sessions.delete(token);
-      sessions.set(session.token, session);
+      const name = req.body.user.trim().toLowerCase();
+      const found = users().find((u) => u.user === name);
+      let session;
+      if (found && samePassword(req.body.password, found))
+        session = openSession(found.user, "user");
+      else {
+        const base = authenticate(req.body.user, req.body.password);
+        session = openSession(base.user, base.role);
+      }
       attempts.delete(key);
       res.json(session);
     } catch (e) {

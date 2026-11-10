@@ -9,8 +9,10 @@ import {
   addItem,
   authenticate,
   prepareSale,
+  localHash,
   reconcile,
   validSession,
+  validateRegister,
 } from "./domain";
 import { loadState, read, saveState, STATE_KEY } from "./storage";
 import { apiClient } from "./api";
@@ -127,11 +129,16 @@ export function StoreProvider({
         return s;
       });
     const attempts = read(storage, "nexus_attempts", { count: 0, until: 0 });
+    const registered = read(storage, "nexus_users", []).find(
+      (u) => u.user === user.trim().toLowerCase(),
+    );
     if (attempts.until > Date.now())
       throw Error("Demasiados intentos. Espera un minuto.");
     let s;
     try {
-      s = authenticate(user, password);
+      if (registered && registered.pass === localHash(password))
+        s = { user: registered.user, role: "user", expires: Date.now() + 1800000 };
+      else s = authenticate(user, password);
     } catch (error) {
       const count = (attempts.until ? 0 : attempts.count || 0) + 1;
       storage.setItem(
@@ -148,6 +155,42 @@ export function StoreProvider({
     storage.removeItem("nexus_attempts");
     setSession(s);
     return s;
+  };
+  const register = (data) => {
+    const clean = {
+      name: data.name.trim(),
+      user: data.user.trim().toLowerCase(),
+      email: data.email.trim(),
+    };
+    if (backend)
+      return backend.register({ ...clean, password: data.password }).then((s) => {
+        sessionStore.setItem("nexus_session", JSON.stringify(s));
+        setSession(s);
+        setMessage("Cuenta creada. ¡Bienvenido a NEXUS!");
+        return s;
+      });
+    const users = read(storage, "nexus_users", []);
+    const errors = validateRegister(
+      { ...data, consent: true },
+      users.map((u) => u.user),
+    );
+    if (Object.keys(errors).length) throw Error(Object.values(errors)[0]);
+    try {
+      storage.setItem(
+        "nexus_users",
+        JSON.stringify([
+          ...users,
+          { ...clean, pass: localHash(data.password) },
+        ]),
+      );
+    } catch {
+      throw Error("No se pudo guardar. Revisa el espacio y permisos del navegador.");
+    }
+    const s = { user: clean.user, role: "user", expires: Date.now() + 1800000 };
+    sessionStore.setItem("nexus_session", JSON.stringify(s));
+    setSession(s);
+    setMessage("Cuenta creada. ¡Bienvenido a NEXUS!");
+    return Promise.resolve(s);
   };
   const logout = () => {
     if (backend && session?.token)
@@ -274,6 +317,7 @@ export function StoreProvider({
         change,
         remove,
         login,
+        register,
         logout,
         saveProduct,
         deleteProduct,

@@ -8,6 +8,7 @@ import { VideoGuide } from "../src/components/VideoGuide";
 import { Catalog } from "../src/pages/Catalog";
 import { Cart, Receipt } from "../src/pages/Cart";
 import { Login } from "../src/pages/Login";
+import { Register } from "../src/pages/Register";
 import { Admin } from "../src/pages/Admin";
 import { Contact } from "../src/pages/Contact";
 import { SEED } from "../src/seed";
@@ -23,6 +24,7 @@ import {
   validSession,
   validateContact,
   validateProduct,
+  validateRegister,
 } from "../src/domain";
 import {
   loadState,
@@ -272,6 +274,24 @@ describe("Componentes React y DOM", () => {
     expect(box.textContent).toContain("Sesión iniciada");
     await click(box.querySelector("button"));
     expect(api.session).toBeNull();
+  });
+  it("C08b Registro valida campos y crea la cuenta", async () => {
+    await wrapped(<Register />);
+    await submit();
+    expect(box.textContent).toContain("El nombre debe tener");
+    expect(api.session).toBeNull();
+    await fill("name", "Ana Soto");
+    await fill("user", "anas");
+    await fill("email", "ana@mail.cl");
+    await fill("password", "Clave1234");
+    await fill("confirm", "Distinta1");
+    await click(box.querySelector('[name="consent"]'));
+    await submit();
+    expect(box.textContent).toContain("no coinciden");
+    await fill("confirm", "Clave1234");
+    await submit();
+    expect(api.session.user).toBe("anas");
+    expect(api.session.role).toBe("user");
   });
   it("C09 Admin impide gestionar sin rol administrativo", async () => {
     await wrapped(<Admin />);
@@ -544,6 +564,22 @@ describe("Reglas almacenamiento y mocks", () => {
         }),
       ).length,
     ).toBe(5);
+  });
+  it("L08b validateRegister rechaza datos inválidos y usuarios repetidos", () => {
+    const good = {
+      name: "Ana Soto",
+      user: "anas",
+      email: "ana@mail.cl",
+      password: "Clave1234",
+      confirm: "Clave1234",
+      consent: true,
+    };
+    expect(validateRegister(good)).toEqual({});
+    expect(validateRegister({ ...good, user: "admin" }).user).toBeDefined();
+    expect(validateRegister(good, ["anas"]).user).toBeDefined();
+    expect(validateRegister({ ...good, password: "soloLetras", confirm: "soloLetras" }).password).toBeDefined();
+    expect(validateRegister({ ...good, email: "mal" }).email).toBeDefined();
+    expect(validateRegister({ ...good, consent: false }).consent).toBeDefined();
   });
   it("L09 sesión vence a los treinta minutos", () => {
     const s = authenticate(" ADMIN ", "Admin123", 1000);
